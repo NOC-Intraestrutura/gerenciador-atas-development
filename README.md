@@ -1,4 +1,4 @@
-#Aplicação Presença em Ambiente de Desenvolvimento.
+#Aplicação Gerenciador Atas em Ambiente de Desenvolvimento.
 
 Setar permissao de execuçao: chmod +x criar-ambiente.sh
 
