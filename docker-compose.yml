@@ -2,12 +2,12 @@ version: '3'
 services:
 
   gerenciador-atas_webapp:
-    build:
-      context: .
-      dockerfile: Dockerfile-gerenciador-atas_webapp
+    #build:
+      #context: .
+      #dockerfile: Dockerfile-gerenciador-atas_webapp
     environment:
       - TZ=America/Fortaleza
-    image: dv-gerenciador-atas-webapp:v1.0
+    image: nocpge/docker-img:dv-gerenciador-atas-webapp-v1.0
     ports:
             - "10201:80"
     container_name: dv-gerenciador-atas-webapp
