@@ -1,0 +1,45 @@
+FROM phusion/passenger-ruby26
+
+# Set correct environment variables.
+ENV HOME /root
+ENV RAILS_ENV development
+
+RUN apt update
+RUN apt install -y sudo curl gnupg build-essential wget autoconf shared-mime-info
+RUN curl -sSL https://get.rvm.io | sudo bash -s stable
+
+# Use baseimage-docker's init process.
+CMD ["/sbin/my_init"]
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Nginx and Passenger are disabled by default. Enable them like so:
+RUN rm -f /etc/service/nginx/down
+RUN rm /etc/nginx/sites-enabled/default
+ADD .nginx-config/gerenciador-atas-webapp.conf /etc/nginx/sites-enabled/webapp.conf
+ADD .nginx-config/gzip_max.conf /etc/nginx/conf.d/gzip_max.conf
+RUN mkdir /home/app/webapp/
+ADD aplicacoes/gerenciador_atas/Gemfile* /home/app/webapp/
+RUN chown app:app /home/app/webapp/Gemfile*
+RUN mkdir -p /var/log/nginx/aplicacoes/
+RUN touch /var/log/nginx/aplicacoes/dvgerenciador-atas_access.log
+RUN touch /var/log/nginx/aplicacoes/dvgerenciador-atas_error.log
+
+# RUN gem install bundler
+RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list
+#RUN apt update && apt-cache policy libssl1.0-dev
+#RUN apt install -y libssl-deva
+RUN bash -lc 'rvm install ruby-2.3.4'
+RUN bash -lc 'rvm --default use ruby-2.3.4'
+
+
+RUN mkdir -p /etc/my_init.d
+ADD .start-config/startup-fb.sh /etc/my_init.d/startup.sh
+RUN chmod +x /etc/my_init.d/*.sh
+
+WORKDIR /home/app/webapp/
+
+RUN chown app:app /home/app/webapp/ -R
+
+RUN sudo -u app bundle install
