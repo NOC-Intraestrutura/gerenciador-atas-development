@@ -9,7 +9,7 @@ services:
       - TZ=America/Fortaleza
     image: dv-gerenciador-atas-webapp:v1.0
     ports:
-            - "9909:80"
+            - "10201:80"
     container_name: dv-gerenciador-atas-webapp
     hostname: dv-gerenciador-atas-webapp
     networks:
