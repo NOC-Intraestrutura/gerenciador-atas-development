@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: db_desenv
+  pool: 5
+  username: adm_gerenciador_atas
+  password: adm_gerenciador_atas
+  # host: dvbco3031
+  host: 172.20.18.95
+  port: 5434
+  schema_search_path: adm_gerenciador_atas
