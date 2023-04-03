@@ -6,6 +6,6 @@ development:
   username: adm_gerenciador_atas
   password: adm_gerenciador_atas
   # host: dvbco3031
-  host: 172.20.18.95
+  host: 192.168.2.60
   port: 5434
   schema_search_path: adm_gerenciador_atas
